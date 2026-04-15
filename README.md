@@ -1,5 +1,7 @@
 # Autonomous Financial Research Agent
 
+**GitHub Repository:** [https://github.com/Shubhampatil4667/Autonomous-Financial-Research-Agent](https://github.com/Shubhampatil4667/Autonomous-Financial-Research-Agent)
+
 A complete production-level AI system that replicates a junior financial analyst workflow using agentic AI with tools, memory, and reasoning.
 
 ## Features
