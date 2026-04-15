@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  financial-agent:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SERPAPI_KEY=${SERPAPI_KEY}
+    volumes:
+      - ./logs:/app/logs
+      - ./cache:/app/cache
+      - ./vector_db:/app/vector_db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  streamlit-frontend:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://financial-agent:8000
+    depends_on:
+      - financial-agent
+    command: ["streamlit", "run", "frontend/app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
+    restart: unless-stopped
